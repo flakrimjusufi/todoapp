@@ -1,22 +1,22 @@
-package test
+package tests
 
 import (
 	"reflect"
 	"testing"
 	"time"
-	"todoapp/model"
-	"todoapp/sample"
+	"todoapp/models"
+	"todoapp/samples"
 )
 
 func TestSampleData(t *testing.T) {
-	sampleData := sample.Sample{}
+	sampleData := samples.Sample{}
 
 	got, err := sampleData.GetSampleData()
 	if err != nil {
 		t.Error(err)
 	}
 
-	expectedData := []model.Todo{
+	expectedData := []models.Todo{
 		{
 			ID:       1,
 			Labels:   "Clean dishes",
@@ -46,7 +46,7 @@ func TestIds(t *testing.T) {
 
 	ids := [3]int{1, 2, 3}
 
-	sampleData := sample.Sample{}
+	sampleData := samples.Sample{}
 
 	got, err := sampleData.GetSampleData()
 	if err != nil {

@@ -1,14 +1,14 @@
-package handler
+package controllers
 
 import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"todoapp/sample"
+	"todoapp/samples"
 )
 
 func GetTodoList(w http.ResponseWriter, r *http.Request) {
-	sampleData := sample.Sample{}
+	sampleData := samples.Sample{}
 
 	got, err := sampleData.GetSampleData()
 	if err != nil {

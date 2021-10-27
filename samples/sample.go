@@ -1,14 +1,14 @@
-package sample
+package samples
 
 import (
 	"time"
-	"todoapp/model"
+	"todoapp/models"
 )
 
 type Sample struct{}
 
-func (s *Sample) GetSampleData() ([]model.Todo, error) {
-	todoList := []model.Todo{
+func (s *Sample) GetSampleData() ([]models.Todo, error) {
+	todoList := []models.Todo{
 		{
 			ID:       1,
 			Labels:   "Clean dishes",
