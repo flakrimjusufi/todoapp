@@ -4,7 +4,7 @@
 
 ## How to Run it?
 
-** Clone the repo in your local environment:**
+**Clone the repo in your local environment:**
 
 ~~~~
 git clone https://github.com/flakrimjusufi/todoapp.git
@@ -16,7 +16,7 @@ git clone https://github.com/flakrimjusufi/todoapp.git
 docker-compose up
 ~~~~
 
-You should see an output in terminal:
+Once the docker-compose is finished, you should see an output in terminal:
 
 ~~~
 Starting server in http://localhost:8088
@@ -28,7 +28,7 @@ Open your browser in [http://localhost:8088](http://localhost:8088) or Send a GE
 
 ...and you should receive a response from the server with a ToDoList.
 
-### In case you don't have docker installed, there are some pre-requisites:
+### In case you don't have docker installed, you just need to do the following:
 
 **1. Install go:**
 
