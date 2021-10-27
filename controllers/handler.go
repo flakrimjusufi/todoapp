@@ -50,5 +50,8 @@ func RenderTemplate(res http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
-	_ = t.Execute(res, data)
+	handleError := t.Execute(res, data)
+	if handleError != nil {
+		log.Fatalln(err)
+	}
 }

@@ -10,7 +10,5 @@ func HandleRoutes() *mux.Router {
 
 	route.HandleFunc("/", controllers.RenderTemplate)
 	route.HandleFunc("/getTodoList", controllers.GetTodoList).Methods("GET")
-	//route.PathPrefix("/templates/").Handler(http.StripPrefix("/templates/", http.FileServer(http.Dir("templates"))))
-
 	return route
 }
