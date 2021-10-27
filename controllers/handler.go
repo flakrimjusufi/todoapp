@@ -8,7 +8,7 @@ import (
 	"todoapp/samples"
 )
 
-func GetTodoList(w http.ResponseWriter, r *http.Request) {
+func GetTodoList(res http.ResponseWriter, req *http.Request) {
 	sampleData := samples.Sample{}
 
 	got, err := sampleData.GetSampleData()
@@ -16,7 +16,7 @@ func GetTodoList(w http.ResponseWriter, r *http.Request) {
 		log.Fatalln(err)
 	}
 
-	handleError := json.NewEncoder(w).Encode(got)
+	handleError := json.NewEncoder(res).Encode(got)
 	if handleError != nil {
 		log.Fatalln(handleError)
 	}
@@ -32,6 +32,9 @@ func RenderTemplate(res http.ResponseWriter, req *http.Request) {
 	}()
 
 	t, err := template.ParseFiles("templates/view.html")
+	if err != nil {
+		log.Fatalln(err)
+	}
 
 	sampleData := samples.Sample{}
 

@@ -62,3 +62,17 @@ func TestIds(t *testing.T) {
 		t.Fatalf("Test failed — Expected %d ids, got %d", len(ids), len(result))
 	}
 }
+
+func TestSize(t *testing.T) {
+
+	sampleData := samples.Sample{}
+
+	got, err := sampleData.GetSampleData()
+	if err != nil {
+		t.Error(err)
+	}
+
+	if len(got) != 3 {
+		t.Fatalf("Test failed — Expected %d ids, got %d", 3, len(got))
+	}
+}
