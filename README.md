@@ -106,6 +106,31 @@ Once the server is up and running, you can hit the endpoints listed in this tabl
 | GET     | http://localhost:8088/ | Will render a UI in browser with some sample ToDoList |
 | GET     | http://localhost:8088/viewToDoList | Will render a UI in browser with ToDos created in database|
 
+##Examples of interacting with API: 
+
+~~~~
+     curl -X POST -k http://localhost:8088/toDoList -d   
+	'{
+ 	 "labels":"Push the code to your repo",
+ 	 "comments":"You still need to do some updates in readme file",
+ 	 "due_date":"2021-10-31T07:40:00Z"
+ 	}'
+~~~~
+
+~~~~
+      curl -X PUT -k http://localhost:8088/toDoList/1  -d   
+	'{
+	 "labels":"Follow the course of Proxies",
+	 "comments":"Today you should focus more on nginx.",
+	 "due_date":"2021-10-30T17:40:00Z"
+	}'
+~~~~
+
+~~~~
+      curl -X GET -k http://localhost:8088/toDoList  
+      curl -X GET -k http://localhost:8088/toDoList/1 
+      curl -X DELETE -k http://localhost:8088/toDoList/1 
+~~~~
 
 ## todoapp User-interface:
 
