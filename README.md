@@ -105,3 +105,8 @@ Once the server is up and running, you can hit the endpoints listed in this tabl
 | DELETE | http://localhost:8088/toDoList/1    |   Will delete a toDo by Id in database and send a successful message back |
 | GET     | http://localhost:8088/ | Will render a UI in browser with some sample ToDoList |
 | GET     | http://localhost:8088/viewToDoList | Will render a UI in browser with ToDos created in database|
+
+### todoapp User-interface:
+
+![](https://github.com/flakrimjusufi/todoapp/blob/main/screenshoots/viewSampleToDoList.png)
+
