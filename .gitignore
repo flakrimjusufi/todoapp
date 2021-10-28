@@ -20,3 +20,4 @@
 
 #env files
 *.env
+seeds/init.sql
