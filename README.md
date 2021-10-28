@@ -106,7 +106,7 @@ Once the server is up and running, you can hit the endpoints listed in this tabl
 | GET     | http://localhost:8088/ | Will render a UI in browser with some sample ToDoList |
 | GET     | http://localhost:8088/viewToDoList | Will render a UI in browser with ToDos created in database|
 
-##Examples of interacting with API: 
+## Examples of interacting with API: 
 
 ~~~~
      curl -X POST -k http://localhost:8088/toDoList -d   
@@ -131,6 +131,8 @@ Once the server is up and running, you can hit the endpoints listed in this tabl
       curl -X GET -k http://localhost:8088/toDoList/1 
       curl -X DELETE -k http://localhost:8088/toDoList/1 
 ~~~~
+
+**You can see all the changes reflected under http://localhost:8088/viewToDoList**
 
 ## todoapp User-interface:
 
