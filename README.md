@@ -111,3 +111,6 @@ Once the server is up and running, you can hit the endpoints listed in this tabl
 
 ![](https://github.com/flakrimjusufi/todoapp/blob/main/screenshoots/viewSampleToDoList.png)
 
+**[Watch a Demo Video](https://youtu.be/Yz-IRic_U0A)**
+
+[![DEMO](https://github.com/flakrimjusufi/todoapp/blob/main/screenshoots/screenshoot.png)](https://youtu.be/Yz-IRic_U0A)
