@@ -10,7 +10,7 @@
 git clone https://github.com/flakrimjusufi/todoapp.git
 ~~~~
 
-*Remove ".example" from both .env.example and /seeds/init.sql-example and populate them with your environment variables.* 
+*Remove ".example" from both .env.example and /seeds/init.sql.example and populate them with your environment variables.* 
 
 
 **In case you have docker-compose installed in your machine, just execute the following:**
@@ -19,8 +19,8 @@ git clone https://github.com/flakrimjusufi/todoapp.git
 docker-compose up
 ~~~~
 
-Docker-compose will build all the dependencies and will add a PostgreSQL image in your container so that we can interact 
-with data. 
+Docker-compose will build all the dependencies and will add a PostgreSQL image in your container alongside 
+with the server so that we can interact with data. 
 
 *Once the docker-compose is finished, you should see an output in terminal:*
 
@@ -50,11 +50,11 @@ For installation instructions, see Go's getting started guide: https://golang.or
 For installation instructions, please refer to this link: https://www.postgresql.org/download/
 ~~~~
 
-**2. Remove ".example" from both .env.example and /seeds/init.sql-example and populate them with your environment variables.**
+**3. Remove ".example" from both .env.example and /seeds/init.sql-example and populate them with your environment variables.**
 
-**3. Execute the script for creating the database in /seeds/init.sql**
+**4. Execute the script for creating the database in /seeds/init.sql**
 
-**4. Run the server:**
+**5. Run the server:**
 
 `go run main.go`
 
@@ -63,7 +63,7 @@ You should recieve a response:
 Starting server in http://localhost:8088
 ~~~~
 
-**3. Send a GET request using cURL or Postman/Insomnia:**
+**6. Send a GET request using cURL or Postman/Insomnia:**
 
 `curl -X GET -k http://localhost:8088/getSampleTodoList`
 
@@ -109,6 +109,18 @@ Once the server is up and running, you can hit the endpoints listed in this tabl
 ## Examples of interacting with API: 
 
 ~~~~
+     curl -X GET -k http://localhost:8088/getSampleTodoList  
+~~~~     
+
+~~~~     
+     curl -X GET -k http://localhost:8088/toDoList  
+~~~~
+
+~~~~     
+     curl -X GET -k http://localhost:8088/toDoList/1 
+~~~~
+
+~~~~
      curl -X POST -k http://localhost:8088/toDoList -d   
 	'{
  	 "labels":"Push the code to your repo",
@@ -118,18 +130,15 @@ Once the server is up and running, you can hit the endpoints listed in this tabl
 ~~~~
 
 ~~~~
-      curl -X PUT -k http://localhost:8088/toDoList/1  -d   
+     curl -X PUT -k http://localhost:8088/toDoList/1  -d   
 	'{
 	 "labels":"Follow the course of Proxies",
 	 "comments":"Today you should focus more on nginx.",
 	 "due_date":"2021-10-30T17:40:00Z"
 	}'
 ~~~~
-
 ~~~~
-      curl -X GET -k http://localhost:8088/toDoList  
-      curl -X GET -k http://localhost:8088/toDoList/1 
-      curl -X DELETE -k http://localhost:8088/toDoList/1 
+     curl -X DELETE -k http://localhost:8088/toDoList/1
 ~~~~
 
 **You can see all the changes reflected under http://localhost:8088/viewToDoList**
@@ -141,3 +150,7 @@ Once the server is up and running, you can hit the endpoints listed in this tabl
 **[Watch a Demo Video](https://youtu.be/Yz-IRic_U0A)**
 
 [![DEMO](https://github.com/flakrimjusufi/todoapp/blob/main/screenshoots/screenshoot.png)](https://youtu.be/Yz-IRic_U0A)
+
+## The app is now live 
+
+**Check it out: http://todo.flakrimjusufi.com/**
