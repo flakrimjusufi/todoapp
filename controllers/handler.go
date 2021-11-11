@@ -1,186 +1,160 @@
 package controllers
 
 import (
-	"encoding/json"
-	"github.com/gorilla/mux"
+	"errors"
+	"github.com/labstack/echo/v4"
 	"html/template"
+	"io"
 	"log"
 	"net/http"
+	"strconv"
 	db "todoapp/database"
 	"todoapp/models"
 	"todoapp/samples"
 )
 
-func GetSampleToDoList(res http.ResponseWriter, req *http.Request) {
+var database = db.Connect().Debug()
+
+type Template struct {
+	templates map[string]*template.Template
+}
+
+func NewTemplate() *Template {
+	return &Template{
+		templates: make(map[string]*template.Template),
+	}
+}
+
+func (tmpl *Template) Render(w io.Writer, htmlName string, data interface{}, c echo.Context) error {
+	if t, exist := tmpl.templates[htmlName]; exist { //Check if template exists
+		return t.Execute(w, data)
+	} else {
+		return errors.New("There is no " + htmlName + " in Template map.")
+	}
+}
+
+// Add Set template on htmlName so that the 'tmpl' will be okay in 'RenderTemplate' function.
+func (tmpl *Template) Add(htmlName string, template *template.Template) {
+	tmpl.templates[htmlName] = template
+}
+
+func GetSampleToDoList(c echo.Context) error {
 	sampleData := samples.Sample{}
 
 	got, err := sampleData.GetSampleData()
 	if err != nil {
 		log.Fatalln(err)
 	}
-
-	handleError := json.NewEncoder(res).Encode(got)
-	if handleError != nil {
-		log.Fatalln(handleError)
-	}
+	return c.JSON(http.StatusOK, got)
 }
 
-func RenderTemplate(res http.ResponseWriter, req *http.Request) {
-
-	defer func() {
-		if e := recover(); e != nil {
-			log.Println(e)
-			res.WriteHeader(http.StatusInternalServerError)
-		}
-	}()
-
-	t, err := template.ParseFiles("templates/view.html")
-	if err != nil {
-		log.Fatalln(err)
-	}
+func RenderTemplate(c echo.Context) error {
 
 	sampleData := samples.Sample{}
 
-	got, err := sampleData.GetSampleData()
-	if err != nil {
-		log.Fatalln(err)
-	}
+	got, _ := sampleData.GetSampleData()
 
-	data := make(map[string]interface{})
+	renderHtml := NewTemplate()
+	renderHtml.Add("templates/view.html", template.Must(template.ParseGlob("templates/*.html")))
 
-	data["toDoList"] = got
+	c.Echo().Renderer = renderHtml
 
-	if err != nil {
-		log.Println(err)
-	}
-	handleError := t.Execute(res, data)
-	if handleError != nil {
-		log.Fatalln(err)
-	}
+	return c.Render(http.StatusOK, "templates/view.html", map[string]interface{}{
+		"toDoList": got,
+	})
 }
 
-func CreateToDoList(res http.ResponseWriter, req *http.Request) {
+func CreateToDoList(c echo.Context) error {
 
-	var database = db.Connect().Debug()
+	todo := &models.Todo{}
 
-	todo := models.Todo{}
-
-	err := json.NewDecoder(req.Body).Decode(&todo) //decode the request body into struct and failed if any error occur
-	if err != nil {
-		panic(err)
+	if err := c.Bind(todo); err != nil {
+		return err
 	}
-
 	database.NewRecord(todo)
 	database.Create(&todo)
-	database.Close()
-
-	handleError := json.NewEncoder(res).Encode(todo)
-	if handleError != nil {
-		log.Fatalln(handleError)
-	}
+	return c.JSON(http.StatusCreated, todo)
 }
 
-func GetAllToDos(res http.ResponseWriter, req *http.Request) {
+func GetAllToDos(c echo.Context) error {
 	todos := getAllTodos()
-	err := json.NewEncoder(res).Encode(todos)
-	if err != nil {
-		log.Fatalln(err)
-	}
+	return c.JSON(http.StatusOK, todos)
 }
 
-func GetToDoById(res http.ResponseWriter, req *http.Request) {
+func GetToDoById(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return err
+	}
+	var todo models.Todo
+	result := database.Where("id = ?", id).Find(&todo)
 
-	var database = db.Connect().Debug()
+	if result.RecordNotFound() {
+		return c.JSON(http.StatusNotFound, "ToDoList not found!")
+	}
+	return c.JSON(http.StatusOK, result.Value)
+}
 
-	vars := mux.Vars(req)
-	idFromMux := vars["id"]
+func UpdateToDoById(c echo.Context) error {
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return err
+	}
+
+	userInput := new(models.Todo)
+	if handleError := c.Bind(userInput); handleError != nil {
+		return handleError
+	}
+
+	var todoList models.Todo
+	result := database.Where("id =?", id).Find(&todoList)
+	if result.RecordNotFound() {
+		return c.JSON(http.StatusNotFound, "ToDoList not found!")
+	}
+
+	todoList.Labels = userInput.Labels
+	todoList.Comments = userInput.Comments
+	todoList.DueDate = userInput.DueDate
+
+	database.Save(&todoList)
+	return c.JSON(http.StatusOK, todoList)
+}
+
+func DeleteToDo(c echo.Context) error {
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return err
+	}
 
 	var todo models.Todo
-	database.Where("id = ?", idFromMux).Find(&todo)
-	database.Close()
-
-	err := json.NewEncoder(res).Encode(todo)
-	if err != nil {
-		log.Fatalln(err)
+	result := database.Where("id =?", id).Find(&todo)
+	if result.RecordNotFound() {
+		return c.JSON(http.StatusNotFound, "ToDoList not found!")
 	}
-}
-
-func UpdateToDoById(w http.ResponseWriter, r *http.Request) {
-
-	var database = db.Connect().Debug()
-
-	todo := models.Todo{}
-	vars := mux.Vars(r)
-	id := vars["id"]
-
-	database.Where("id =?", id).Find(&todo)
-
-	err := json.NewDecoder(r.Body).Decode(&todo)
-	if err != nil {
-		panic(err)
-	}
-
-	database.Save(&todo)
-	database.Close()
-
-	handleError := json.NewEncoder(w).Encode(todo)
-	if handleError != nil {
-		log.Fatalln(handleError)
-	}
-}
-
-func DeleteToDo(res http.ResponseWriter, req *http.Request) {
-
-	var database = db.Connect().Debug()
-
-	todo := models.Todo{}
-	vars := mux.Vars(req)
-	id := vars["id"]
-
-	database.Where("id =?", id).Find(&todo)
 	database.Delete(&todo)
-	database.Close()
-
-	err := json.NewEncoder(res).Encode("ToDo deleted successfully")
-	if err != nil {
-		log.Fatalln(err)
-	}
+	return c.NoContent(http.StatusNoContent)
 }
 
-func RenderCustomToDoTemplate(res http.ResponseWriter, req *http.Request) {
-
-	defer func() {
-		if e := recover(); e != nil {
-			log.Println(e)
-			res.WriteHeader(http.StatusInternalServerError)
-		}
-	}()
-
-	t, err := template.ParseFiles("templates/view.html")
-	if err != nil {
-		log.Fatalln(err)
-	}
+func RenderCustomToDoTemplate(c echo.Context) error {
 
 	toDoList := getAllTodos()
-
 	data := make(map[string]interface{})
-
 	data["toDoList"] = toDoList
 
-	if err != nil {
-		log.Println(err)
-	}
-	handleError := t.Execute(res, data)
-	if handleError != nil {
-		log.Fatalln(err)
-	}
+	renderHtml := NewTemplate()
+	renderHtml.Add("templates/view.html", template.Must(template.ParseGlob("templates/*.html")))
+
+	c.Echo().Renderer = renderHtml
+
+	return c.Render(http.StatusOK, "templates/view.html", map[string]interface{}{
+		"toDoList": toDoList,
+	})
 }
 
 func getAllTodos() []models.Todo {
-	var database = db.Connect().Debug()
-
 	var toDoList []models.Todo
 	database.Find(&toDoList)
-	database.Close()
 	return toDoList
 }
