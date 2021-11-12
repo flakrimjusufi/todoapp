@@ -10,34 +10,14 @@ import (
 	"todoapp/controllers"
 )
 
-var toDoListById = `{"ID":1,"labels":"Drink coffie","comments":"Call some friends..","due_date":"2021-10-29T09:40:00+02:00"}
+var createToDoList = `{"labels":"Don't forget the breakfast","comments":"You should take a coffee too","due_date":"2021-11-12T10:45:00Z"}
 `
 
-var createToDoList = `{"labels":"Don't forget the breakfast'","comments":"You should take a coffee too","due_date":"2021-11-12T10:45:00Z"}
-`
-
-var updateToDoList = `{"ID":7,"labels":"Don't forget to eat something'","comments":"You should take a coffee too","due_date":"2021-11-12T10:45:00Z"}
+var updateToDoList = `{"ID":1,"labels":"Don't forget to eat something","comments":"You should take a coffee too","due_date":"2021-11-12T10:55:00Z"}
 `
 
 var toDoListNotFound = `"ToDoList not found!"
 `
-
-func TestGetToDoListById(t *testing.T) {
-	// Setup
-	e := echo.New()
-	req := httptest.NewRequest(http.MethodGet, "/", nil)
-	rec := httptest.NewRecorder()
-	c := e.NewContext(req, rec)
-	c.SetPath("/toDoList/:id")
-	c.SetParamNames("id")
-	c.SetParamValues("1")
-
-	// Assertions
-	if assert.NoError(t, controllers.GetToDoById(c)) {
-		assert.Equal(t, http.StatusOK, rec.Code)
-		assert.Equal(t, toDoListById, rec.Body.String())
-	}
-}
 
 func TestCreateToDoList(t *testing.T) {
 	// Setup
@@ -54,6 +34,23 @@ func TestCreateToDoList(t *testing.T) {
 	}
 }
 
+func TestGetToDoListById(t *testing.T) {
+	// Setup
+	e := echo.New()
+	req := httptest.NewRequest(http.MethodGet, "/", nil)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+	c.SetPath("/toDoList/:id")
+	c.SetParamNames("id")
+	c.SetParamValues("1")
+
+	// Assertions
+	if assert.NoError(t, controllers.GetToDoById(c)) {
+		assert.Equal(t, http.StatusOK, rec.Code)
+		assert.Equal(t, true, rec.Body.Len() > 0)
+	}
+}
+
 func TestUpdateToDoList(t *testing.T) {
 	// Setup
 	e := echo.New()
@@ -63,7 +60,7 @@ func TestUpdateToDoList(t *testing.T) {
 	c := e.NewContext(req, rec)
 	c.SetPath("/toDoList/:id")
 	c.SetParamNames("id")
-	c.SetParamValues("7")
+	c.SetParamValues("1")
 
 	// Assertions
 	if assert.NoError(t, controllers.UpdateToDoById(c)) {

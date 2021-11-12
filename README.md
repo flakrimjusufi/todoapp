@@ -103,6 +103,11 @@ populate it with you environment variables*
 go test ./tests
 ~~~
 
+*Or if you are using docker-compose, you should execute the following command:*
+~~~
+docker-compose exec server go test ./tests
+~~~
+
 ## Interacting with API 
 
 Once the server is up and running, you can hit the endpoints listed in this table to interact with data: 
