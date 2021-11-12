@@ -92,6 +92,10 @@ You should have a response from server:
 ]
 ~~~~
 
+**7. Run the test cases from the root of the project to verify that everything is working okay:**
+
+`go test ./tests`
+
 ## Interacting with API 
 
 Once the server is up and running, you can hit the endpoints listed in this table to interact with data: 
