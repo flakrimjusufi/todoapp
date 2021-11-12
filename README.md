@@ -99,7 +99,9 @@ populate it with you environment variables*
 
 *Once you have set up your environment variables, execute the following command:*
 
-`go test ./tests`
+~~~
+go test ./tests
+~~~
 
 ## Interacting with API 
 
