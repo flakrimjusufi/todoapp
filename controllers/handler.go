@@ -78,6 +78,9 @@ func CreateToDoList(c echo.Context) error {
 
 func GetAllToDos(c echo.Context) error {
 	todos := getAllTodos()
+	if len(todos) == 0 {
+		return c.JSON(http.StatusNoContent, todos)
+	}
 	return c.JSON(http.StatusOK, todos)
 }
 
