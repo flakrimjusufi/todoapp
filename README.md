@@ -92,7 +92,12 @@ You should have a response from server:
 ]
 ~~~~
 
-**7. Run the test cases from the root of the project to verify that everything is working okay:**
+**7. Run the test cases from the root of the project to verify that everything is working okay**
+
+*Before this step, you should remove ".example" from .env.example in /tests directory and 
+populate it with you environment variables*
+
+*Once you have set up your environment variables, execute the following command:*
 
 `go test ./tests`
 
