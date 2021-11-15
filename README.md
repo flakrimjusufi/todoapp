@@ -22,7 +22,9 @@ docker-compose up
 Docker-compose will build all the dependencies and will add a PostgreSQL image in your container alongside 
 with the server so that we can interact with data. 
 
-*Once the docker-compose is finished, you should see an output in terminal:*
+***NOTE: You should configure your environment variables in sync with docker-compose.yml file***
+
+*Once docker-compose is finished, you should see an output in terminal:*
 
 ~~~
 Starting server in http://localhost:8088
