@@ -34,6 +34,19 @@ Open your browser in [http://localhost:8088](http://localhost:8088) or Send a GE
 
 ...and you should receive a response from the server with a ToDoList.
 
+**To verify that everything is working smoothly, run the test cases:**
+
+*Make sure to remove ".example" from .env.example in /tests directory and populate it with you environment variables,
+same as you did in the step above.*
+
+*Once you have set up your environment variables, execute the following command in another terminal:*
+
+~~~
+docker-compose exec server go test ./tests
+~~~
+
+*You should see all tests passing successfully!* 
+
 ### In case you don't have docker installed, you need to do the following:
 
 **1. Install go:**
@@ -54,7 +67,18 @@ For installation instructions, please refer to this link: https://www.postgresql
 
 **4. Execute the script for creating the database in /seeds/init.sql**
 
-**5. Run the server:**
+**5. Run the test cases from the root of the project to verify that everything is working okay:**
+
+*Make sure to remove ".example" from .env.example in /tests directory and populate it with you environment variables,
+same as you did in the step above.*
+
+*Once you have set up your environment variables, execute the following command:*
+
+~~~
+go test ./tests
+~~~
+
+**6. Run the server:**
 
 `go run main.go`
 
@@ -63,7 +87,7 @@ You should recieve a response:
 Starting server in http://localhost:8088
 ~~~~
 
-**6. Send a GET request using cURL or Postman/Insomnia:**
+**7. Send a GET request using cURL or Postman/Insomnia:**
 
 `curl -X GET -k http://localhost:8088/getSampleTodoList`
 
@@ -91,22 +115,6 @@ You should have a response from server:
   }
 ]
 ~~~~
-
-**7. Run the test cases from the root of the project to verify that everything is working okay**
-
-*Before this step, you should remove ".example" from .env.example in /tests directory and 
-populate it with you environment variables*
-
-*Once you have set up your environment variables, execute the following command:*
-
-~~~
-go test ./tests
-~~~
-
-*Or if you are using docker-compose, you should execute the following command:*
-~~~
-docker-compose exec server go test ./tests
-~~~
 
 ## Interacting with API 
 
