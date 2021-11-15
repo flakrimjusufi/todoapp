@@ -22,7 +22,9 @@ docker-compose up
 Docker-compose will build all the dependencies and will add a PostgreSQL image in your container alongside 
 with the server so that we can interact with data. 
 
-*Once the docker-compose is finished, you should see an output in terminal:*
+***NOTE: You should configure your environment variables in sync with docker-compose.yml file***
+
+*Once docker-compose is finished, you should see an output in terminal:*
 
 ~~~
 Starting server in http://localhost:8088
@@ -33,6 +35,19 @@ Open your browser in [http://localhost:8088](http://localhost:8088) or Send a GE
 `curl -X GET -k http://localhost:8088/getSampleTodoList`
 
 ...and you should receive a response from the server with a ToDoList.
+
+**To verify that everything is working smoothly, run the test cases:**
+
+*Make sure to remove ".example" from .env.example in /tests directory and populate it with you environment variables,
+same as you did in the step above.*
+
+*Once you have set up your environment variables, execute the following command in another terminal:*
+
+~~~
+docker-compose exec server go test ./tests
+~~~
+
+*You should see all tests passing successfully!* 
 
 ### In case you don't have docker installed, you need to do the following:
 
@@ -54,7 +69,18 @@ For installation instructions, please refer to this link: https://www.postgresql
 
 **4. Execute the script for creating the database in /seeds/init.sql**
 
-**5. Run the server:**
+**5. Run the test cases from the root of the project to verify that everything is working okay:**
+
+*Make sure to remove ".example" from .env.example in /tests directory and populate it with you environment variables,
+same as you did in the step above.*
+
+*Once you have set up your environment variables, execute the following command:*
+
+~~~
+go test ./tests
+~~~
+
+**6. Run the server:**
 
 `go run main.go`
 
@@ -63,7 +89,7 @@ You should recieve a response:
 Starting server in http://localhost:8088
 ~~~~
 
-**6. Send a GET request using cURL or Postman/Insomnia:**
+**7. Send a GET request using cURL or Postman/Insomnia:**
 
 `curl -X GET -k http://localhost:8088/getSampleTodoList`
 

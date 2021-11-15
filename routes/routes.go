@@ -1,20 +1,18 @@
 package routes
 
 import (
-	"github.com/gorilla/mux"
+	"github.com/labstack/echo/v4"
 	"todoapp/controllers"
 )
 
-func HandleRoutes() *mux.Router {
-	route := mux.NewRouter()
+func HandleRoutes(route *echo.Echo) {
 
-	route.HandleFunc("/", controllers.RenderTemplate)
-	route.HandleFunc("/viewToDoList", controllers.RenderCustomToDoTemplate)
-	route.HandleFunc("/getSampleTodoList", controllers.GetSampleToDoList).Methods("GET")
-	route.HandleFunc("/toDoList", controllers.CreateToDoList).Methods("POST")
-	route.HandleFunc("/toDoList", controllers.GetAllToDos).Methods("GET")
-	route.HandleFunc("/toDoList/{id}", controllers.GetToDoById).Methods("GET")
-	route.HandleFunc("/toDoList/{id}", controllers.UpdateToDoById).Methods("PUT")
-	route.HandleFunc("/toDoList/{id}", controllers.DeleteToDo).Methods("DELETE")
-	return route
+	route.GET("/", controllers.RenderTemplate)
+	route.GET("/viewToDoList", controllers.RenderCustomToDoTemplate)
+	route.GET("/getSampleTodoList", controllers.GetSampleToDoList)
+	route.POST("/toDoList", controllers.CreateToDoList)
+	route.GET("/toDoList", controllers.GetAllToDos)
+	route.GET("/toDoList/:id", controllers.GetToDoById)
+	route.PUT("/toDoList/:id", controllers.UpdateToDoById)
+	route.DELETE("/toDoList/:id", controllers.DeleteToDo)
 }
