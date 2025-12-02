@@ -122,15 +122,15 @@ You should have a response from server:
 
 Once the server is up and running, you can hit the endpoints listed in this table to interact with data: 
 
-| HTTP call        | Endpoint           | Description  |
-| :-------------: |:-------------:| :-----:|
-| GET     | http://localhost:8088/getSampleTodoList | Will list a sample of ToDoList |
-| POST      | http://localhost:8088/toDoList     |  Will create a ToDoList in database |
-| GET | http://localhost:8088/toDoList      |   Will list all toDos created in database |
-| PUT | http://localhost:8088/toDoList/1    |   Will update a toDo in database and send back the response |
-| DELETE | http://localhost:8088/toDoList/1    |   Will delete a toDo by Id in database and send a successful message back |
-| GET     | http://localhost:8088/ | Will render a UI in browser with some sample ToDoList |
-| GET     | http://localhost:8088/viewToDoList | Will render a UI in browser with ToDos created in database|
+| HTTP call |                Endpoint                 |                               Description                               |
+|:---------:|:---------------------------------------:|:-----------------------------------------------------------------------:|
+|    GET    | http://localhost:8088/getSampleTodoList |                     Will list a sample of ToDoList                      |
+|   POST    |     http://localhost:8088/toDoList      |                   Will create a ToDoList in database                    |
+|    GET    |     http://localhost:8088/toDoList      |                 Will list all toDos created in database                 |
+|    PUT    |    http://localhost:8088/toDoList/1     |        Will update a toDo in database and send back the response        |
+|  DELETE   |    http://localhost:8088/toDoList/1     | Will delete a toDo by Id in database and send a successful message back |
+|    GET    |         http://localhost:8088/          |          Will render a UI in browser with some sample ToDoList          |
+|    GET    |   http://localhost:8088/viewToDoList    |       Will render a UI in browser with ToDos created in database        |
 
 ## Examples of interacting with API: 
 
@@ -176,7 +176,3 @@ Once the server is up and running, you can hit the endpoints listed in this tabl
 **[Watch a Demo Video](https://youtu.be/Yz-IRic_U0A)**
 
 [![DEMO](https://github.com/flakrimjusufi/todoapp/blob/main/screenshoots/screenshoot.png)](https://youtu.be/Yz-IRic_U0A)
-
-## The app is now live 
-
-**Check it out: http://todo.flakrimjusufi.com/**
